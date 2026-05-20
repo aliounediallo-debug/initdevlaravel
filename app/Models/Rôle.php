@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Role extends Model
 {
@@ -24,10 +24,11 @@ class Role extends Model
     // ─── Relations ───────────────────────────────────────────────
 
     /**
-     * Un rôle peut être attribué à plusieurs comptes.
+     * Un rôle peut être attribué à plusieurs utilisateurs.
      */
-    public function comptes(): HasMany
-    {
-        return $this->hasMany(Compte::class, 'role_id', 'id_role');
+    public function users():BelongsToMany{
+        return $this->belongstomany(User::class);
     }
+
+
 }

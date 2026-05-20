@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -56,32 +56,10 @@ class User extends Authenticatable
     /**
      * Transactions initiées par cet utilisateur.
      */
-    public function transactions(): HasMany
+    public function roles (): BelongsToMany
     {
-        return $this->hasMany(Transaction::class, 'utilisateur_id', 'id_utilisateur');
+        return $this->belongtomamy(Role::class);
     }
 
-    //  Helpers
 
-    public function isClient(): bool
-    {
-        return $this->type === 'client';
-    }
-
-    public function isPartenaire(): bool
-    {
-        return $this->type === 'partenaire';
-    }
-
-    /**
-     * Nom complet (ou raison sociale pour un partenaire).
-     */
-    public function getNomCompletAttribute(): string
-    {
-        if ($this->isPartenaire() && $this->raison_sociale) {
-            return $this->raison_sociale;
-        }
-
-        return "{$this->prenom} {$this->nom}";
-    }
 }
