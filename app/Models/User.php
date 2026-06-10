@@ -11,7 +11,7 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $primaryKey = 'id_utilisateur';
+    protected $primaryKey = 'id_user';
 
     protected $fillable = [
         'compte_id',
@@ -21,14 +21,9 @@ class User extends Authenticatable
         'password',
         'telephone',
         'adresse',
-        'type',
         'date_naissance',
         'pays',
         'numero_piece',
-
-        'raison_sociale',
-        'taux_commission',
-        'logo',
         'date_creat',
     ];
 
@@ -48,10 +43,11 @@ class User extends Authenticatable
     /**
      * Un utilisateur possède un compte (1:1).
      */
-    public function compte(): BelongsTo
+    public function compte()
     {
-        return $this->belongsTo(Compte::class, 'compte_id', 'id_compte');
+      return $this->hasOne(Compte::class);
     }
+
 
     /**
      * Transactions initiées par cet utilisateur.

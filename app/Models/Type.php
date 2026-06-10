@@ -18,8 +18,8 @@ class Type extends Model
     /**
      * Un type peut être lié à plusieurs comptes.
      */
-    public function comptes(): HasMany
+  public function comptes()
     {
-        return $this->hasMany(Compte::class, 'id_type', 'id_type');
+        return $this->hasMany(Compte::class);
     }
 }

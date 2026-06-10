@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('types', function (Blueprint $table) {
             $table->id('id_type');
-            $table->string('nom', 50)->unique(); // ex: 'client', 'partenaire'
+            $table->string('nom', 50)->unique(); 
             $table->timestamps();
         });
     }

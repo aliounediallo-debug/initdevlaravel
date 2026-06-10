@@ -10,8 +10,7 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id('id');
-            $table->foreignId('compte_id')->constrained('comptes', 'id_compte')->restrictOnDelete();
-            $table->foreignId('compte_destination_id')->constrained('comptes', 'id_compte')->restrictOnDelete();
+            $table->foreignId('compte_id')->constrained();
             $table->enum('type', ['envoi', 'retrait', 'depot',]);
             $table->decimal('montant', 15, 2);
             $table->decimal('frais', 15, 2)->default(0.00);

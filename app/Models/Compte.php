@@ -19,8 +19,7 @@ class Compte extends Model
         'solde',
         'devise',
         'statut',
-        'is_verified',
-        'date_creat',
+        'is_active',
     ];
 
     protected $casts = [
@@ -29,7 +28,7 @@ class Compte extends Model
         'date_creat'  => 'datetime',
     ];
 
-    // ─── Relations ───────────────────────────────────────────────
+    // ─── Relations ────
 
     /**
      * Un compte appartient à un rôle.
@@ -40,19 +39,24 @@ class Compte extends Model
     }
 
     /**
-     * Un compte appartient à un type (client ou partenaire).
+     * Un compte appartient à un type (client ou agent).
      */
-    public function type(): BelongsTo
+    public function type()
     {
-        return $this->belongsTo(Type::class, 'id_type', 'id_type');
+        return $this->belongsTo(Type::class);
     }
 
     /**
      * Un compte est détenu par un seul utilisateur (1:1).
      */
-    public function utilisateur(): HasOne
+    public function user()
     {
-        return $this->hasOne(Utilisateur::class, 'compte_id', 'id_compte');
+        return $this->belongsTo(User::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
     }
 
     /**

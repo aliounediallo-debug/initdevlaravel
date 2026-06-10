@@ -12,16 +12,12 @@ class Transaction extends Model
 
     protected $fillable = [
         'compte_id',
-        'compte_destination_id',
-        'utilisateur_id',
         'reference',
         'type',
-        'montant',
+        'montant_net',
         'frais',
         'devise',
         'statut_transaction',
-        'motif',
-        'metadata',
         'date_effectuee',
     ];
 
@@ -29,7 +25,6 @@ class Transaction extends Model
         'montant'         => 'decimal:2',
         'frais'           => 'decimal:2',
         'montant_net'     => 'decimal:2',
-        'metadata'        => 'array',
         'date_effectuee'  => 'datetime',
     ];
 
@@ -44,14 +39,14 @@ class Transaction extends Model
         });
     }
 
-    // ─── Relations ───────────────────────────────────────────────
+    // ─── Relations ───
 
     /**
      * Compte source (expéditeur).
      */
-    public function compteSource(): BelongsTo
+    public function compte(): BelongsTo
     {
-        return $this->belongsTo(Compte::class, 'compte_id', 'id_compte');
+        return $this->belongsTo(Compte::class);
     }
 
     /**
@@ -65,12 +60,12 @@ class Transaction extends Model
     /**
      * Utilisateur ayant initié la transaction.
      */
-    public function utilisateur(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Utilisateur::class, 'utilisateur_id', 'id_utilisateur');
+        return $this->belongsTo(User::class, 'user_id', 'id_user');
     }
 
-    // ─── Helpers ─────────────────────────────────────────────────
+    // ─── Helpers ───
 
     public function getMontantNetAttribute(): float
     {
